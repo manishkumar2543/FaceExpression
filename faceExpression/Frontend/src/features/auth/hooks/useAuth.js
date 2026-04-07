@@ -12,28 +12,47 @@ export const useAuth=()=>{
 
     const handlerRegister=async({username,email,password})=>{
         setLoading(true);
-        const data=await register({username,email,password});
-        setUser(data.user);
-        setLoading(false);
+        try {
+            const data=await register({username,email,password});
+            setUser(data.user);
+            return data;
+        } finally {
+            setLoading(false);
+        }
     }
 
     const handlerLogin=async({email,password,username})=>{
         setLoading(true);
-        const data=await login({email,password,username});
-        setUser(data.user);
-        setLoading(false);
+        try {
+            const data=await login({email,password,username});
+            setUser(data.user);
+            return data;
+        } finally {
+            setLoading(false);
+        }
     }
     const handlerGetMe=async()=>{
         setLoading(true);
-        const data=await getMe();
-        setUser(data.user);
-        setLoading(false);
+        try {
+            const data=await getMe();
+            setUser(data.user);
+            return data;
+        } catch (error) {
+            setUser(null);
+            return null;
+        } finally {
+            setLoading(false);
+        }
     }
     const handlerLogout=async()=>{
         setLoading(true);
-        const data=await logout();
-        setUser(null);
-        setLoading(false);
+        try {
+            const data=await logout();
+            setUser(null);
+            return data;
+        } finally {
+            setLoading(false);
+        }
     }
 
     useEffect(() => {
