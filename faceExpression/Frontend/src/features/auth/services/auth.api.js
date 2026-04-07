@@ -1,10 +1,20 @@
 import axios from 'axios';
+<<<<<<< HEAD
 const api=axios.create({
     baseURL:'http://localhost:3000',
     withCredentials:true
 })
 
 
+=======
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+  withCredentials: true
+})
+
+
+
+>>>>>>> af8855a (Re-deploy update)
 export async function register({username,email,password}){
     const response=await api.post('/api/auth/register',{
         username,email,password

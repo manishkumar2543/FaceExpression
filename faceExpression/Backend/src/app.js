@@ -9,7 +9,15 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use(cors({
+<<<<<<< HEAD
     origin: 'http://localhost:5173',
+=======
+    origin: [
+        'http://localhost:5173',
+         'https://face-expression-players.onrender.com'
+
+    ],
+>>>>>>> af8855a (Re-deploy update)
     credentials: true
 }))
 
