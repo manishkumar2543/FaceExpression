@@ -1,0 +1,104 @@
+.music-player {
+  width: 100%;
+  margin: 20px auto;
+  padding: 12px;
+  border-radius: 18px;
+
+  // 🔥 Light glass look
+  background: linear-gradient(135deg, #393531, #816947);
+  backdrop-filter: blur(20px);
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  font-family: "Poppins", sans-serif;
+  color: #fff;
+
+  &__top-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  // 🔥 SMALL POSTER
+  &__poster {
+    width: 55px;
+    height: 55px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid #ff7a00;
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  &__mood {
+    font-size: 11px;
+    opacity: 0.8;
+  }
+
+  // 🔥 COMPACT CONTROLS
+  &__controls {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 8px;
+    
+  }
+
+  &__button {
+    border: none;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    font-size: 14px;
+    cursor: pointer;
+
+    // 🔥 white + orange theme
+    background: rgba(255, 255, 255, 0.9);
+    color: #ff7a00;
+
+    transition: 0.2s;
+
+    &:hover {
+      transform: scale(1.1);
+      background: #ff7a00;
+      color: #fff;
+    }
+  }
+
+  // 🔥 PLAY BUTTON SPECIAL
+  &__button--primary {
+    width: 48px;
+    height: 48px;
+    font-size: 16px;
+
+    background: #ff7a00;
+    color: #fff;
+
+    box-shadow: 0 4px 15px rgba(255, 122, 0, 0.4);
+
+    &:hover {
+      background: #ff9333;
+    }
+  }
+
+  // 🔥 SLIDER
+  &__progress-row {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__range {
+    width: 100%;
+    accent-color: #ff7a00; // 🔥 ORANGE
+  }
+
+  &__time {
+    font-size: 11px;
+    color: #fff;
+  }
+}
