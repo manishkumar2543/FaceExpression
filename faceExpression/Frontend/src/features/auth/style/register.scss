@@ -1,0 +1,54 @@
+.register-page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    .form-container{
+       
+        padding-inline: 2rem;
+        padding-block: 2rem;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px 0px rgba(18, 7, 25, 0.75);
+        min-width: 300px;
+
+        h1{
+            text-align: center;
+        }
+
+
+         form{
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+
+                input{
+                    padding-block: 0.5rem;
+                    padding-inline: 1rem;
+                    border-radius: 5px;
+                    border: none;
+                    outline: none;
+                }
+
+                .form-group{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                }
+
+
+                
+
+                
+               
+            }
+
+
+            
+            
+       
+    
+
+}
+
+}
