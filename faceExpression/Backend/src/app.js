@@ -1,7 +1,7 @@
 const express = require('express')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
-const path = require('path') // 👈 add this
+const path = require('path') 
 
 const app = express()
 
@@ -9,15 +9,11 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use(cors({
-<<<<<<< HEAD
-    origin: 'http://localhost:5173',
-=======
     origin: [
+        'http://localhost:3000',
         'http://localhost:5173',
-         'https://face-expression-players.onrender.com'
-
+        'https://face-expression-players.onrender.com'
     ],
->>>>>>> af8855a (Re-deploy update)
     credentials: true
 }))
 
@@ -29,7 +25,7 @@ app.use('/api/auth', authRouter)
 app.use('/api/songs', songRouter)
 
 
-// 🔥 👇 YAHAN ADD KARNA HAI (IMPORTANT)
+
 
 app.use(express.static(path.join(__dirname, '../public')))
 
