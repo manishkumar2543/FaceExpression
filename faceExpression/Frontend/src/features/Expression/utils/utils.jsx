@@ -3,47 +3,34 @@ import {
   FilesetResolver,
 } from "@mediapipe/tasks-vision";
 
+export const init = async ({ videoRef, faceLandmarkerRef }) => {
+  const vision = await FilesetResolver.forVisionTasks(
+    "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/wasm"
+  );
 
+  faceLandmarkerRef.current = await FaceLandmarker.createFromOptions(vision, {
+    baseOptions: {
+      modelAssetPath:
+        "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
+    },
+    runningMode: "VIDEO",
+    numFaces: 1,
+  });
 
+  const stream = await navigator.mediaDevices.getUserMedia({
+    video: true,
+  });
 
+  videoRef.current.srcObject = stream;
+};
 
-  // ✅ 1. INIT (setup + camera)
-  export const init = async ({ videoRef, faceLandmarkerRef}) => {
-    const vision = await FilesetResolver.forVisionTasks(
-      "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/wasm"
-    );
-
-    faceLandmarkerRef.current =
-      await FaceLandmarker.createFromOptions(vision, {
-        baseOptions: {
-          modelAssetPath:
-            "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
-        },
-        runningMode: "VIDEO",
-        numFaces: 1,
-      });
-
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: true,
-    });
-
-    videoRef.current.srcObject = stream;
-  };
-
-  // ✅ 2. DETECT (same logic)
- 
 export const detect = ({ videoRef, faceLandmarkerRef, setExpression }) => {
   if (!videoRef.current || !faceLandmarkerRef.current) return;
 
   const now = Date.now();
+  const results = faceLandmarkerRef.current.detectForVideo(videoRef.current, now);
 
-  const results =
-    faceLandmarkerRef.current.detectForVideo(
-      videoRef.current,
-      now
-    );
-
-  let currentExpression = ""; // ✅ variable banaya
+  let currentExpression = "No Face Detected";
 
   if (results.faceLandmarks.length > 0) {
     const landmarks = results.faceLandmarks[0];
@@ -60,19 +47,18 @@ export const detect = ({ videoRef, faceLandmarkerRef, setExpression }) => {
     const eyeBottom = landmarks[145];
     const eyeOpen = Math.abs(eyeTop.y - eyeBottom.y);
 
-    if (mouthWidth > 0.12 && mouthHeight > 0.003) {
-      currentExpression = "happy";
-    } else if (mouthHeight > 0.06) {
+    // Order matters: wide-open mouth should prefer wow before happy.
+    if (mouthHeight > 0.06) {
       currentExpression = "wow";
-    } else if (eyeOpen < 0.01) {
+    } else if (eyeOpen < 0.016) {
       currentExpression = "sleep";
-    } else if (mouthWidth < 0.09 && mouthHeight < 0.025) {
+    } else if (mouthWidth > 0.11 && mouthHeight > 0.018) {
+      currentExpression = "happy";
+    } else {
       currentExpression = "sad";
-    } 
-  } else {
-    currentExpression = "No Face Detected";
+    }
   }
 
-  setExpression(currentExpression); // ✅ correct
+  setExpression(currentExpression);
   return currentExpression;
 };

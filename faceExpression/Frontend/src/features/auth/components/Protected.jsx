@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAuth } from '../hooks/useAuth'
-import { useNavigate } from 'react-router'
+import { Navigate, useNavigate } from 'react-router'
 
 const Protected = ({children}) => {
     const {user,loading}=useAuth()
@@ -10,8 +10,8 @@ const Protected = ({children}) => {
         return <h1>Loading...</h1>
     }
 
-    if(!user){
-        return navigate('/login')
+    if(!loading && !user){
+        return <Navigate to='/login'/>
     }
 
   return children

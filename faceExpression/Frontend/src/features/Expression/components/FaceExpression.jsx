@@ -1,49 +1,41 @@
 import { useEffect, useRef, useState } from "react";
-import { detect,init } from "../utils/utils";
+import { detect, init } from "../utils/utils";
+import Playlist from "./Playlist";
+import "./Playlist.scss";
 
-
-export default function FaceExpression({onClick=()=>{ }}) {
+export default function FaceExpression({ onClick = () => {} }) {
   const videoRef = useRef(null);
   const faceLandmarkerRef = useRef(null);
   const animationRef = useRef(null);
 
   const [expression, setExpression] = useState("Detecting...");
 
-
-
   useEffect(() => {
-    init({ videoRef, faceLandmarkerRef}); // sirf setup
+    init({ videoRef, faceLandmarkerRef });
     return () => {
-      if (animationRef.current)
-        cancelAnimationFrame(animationRef.current);
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
     };
   }, []);
 
-  async function handleClick() {
-
-   const expression =  detect({ videoRef, faceLandmarkerRef, setExpression });
-    console.log(expression);
-   onClick(expression);
-
-    
+  function handleClick() {
+    const nextExpression = detect({ videoRef, faceLandmarkerRef, setExpression });
+    onClick(nextExpression);
   }
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <h2>Face Expression</h2>
-      <video
-        ref={videoRef}
-        autoPlay
-        playsInline
-        style={{ width: "400px", border: "2px solid black" }}
-      />
+    <div className="expression-layout">
+      <div className="expression-panel">
+        <h2>Face Expression</h2>
+        <video ref={videoRef} autoPlay playsInline className="expression-panel__video" />
 
-      <h3>{expression}</h3>
+        <h3>{expression}</h3>
 
-      {/* 🔥 Button se control */}
-      <button className="button"
-       onClick={handleClick}>Start Detect</button>
+        <button className="button" onClick={handleClick}>
+          Start Detect
+        </button>
+      </div>
 
+      <Playlist detectedExpression={expression} />
     </div>
   );
 }

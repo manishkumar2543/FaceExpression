@@ -1,5 +1,6 @@
 const mongoose=require('mongoose')
 
+const ALLOWED_MOODS = ['sad', 'happy', 'wow', 'sleep']
 
 const songSchema=new mongoose.Schema({
      url:{
@@ -17,12 +18,20 @@ const songSchema=new mongoose.Schema({
      },
      mood:{
         type:String,
+        required:true,
+        lowercase:true,
+        trim:true,
         enum:{
-            values:['sad','happy','wow','sleep'],
-            message:'Enum this is'
+            values:ALLOWED_MOODS,
+            message:'Mood must be one of: sad, happy, wow, sleep'
         }
      }
      
+}, {
+    timestamps: true
 })
 const songModel=mongoose.model('song',songSchema)
-module.exports=songModel
+module.exports = {
+    songModel,
+    ALLOWED_MOODS
+}
