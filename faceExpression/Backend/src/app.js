@@ -12,7 +12,9 @@ app.use(cors({
     origin: [
         'http://localhost:3000',
         'http://localhost:5173',
-        'https://face-expression-players.onrender.com'
+        'http://localhost:5174',
+        'https://face-expression-players.onrender.com',
+        'https://faceexpression.onrender.com'
     ],
     credentials: true
 }))

@@ -1,15 +1,8 @@
 import axios from "axios";
 
-const isLocalHost =
-  typeof window !== "undefined" &&
-  ["localhost", "127.0.0.1"].includes(window.location.hostname);
-
-const apiBaseUrl = isLocalHost
-  ? ""
-  : (import.meta.env.VITE_API_URL || window.location.origin);
-
 const api = axios.create({
-  baseURL: apiBaseUrl,
+  // Use same-origin API requests in both local proxy and production deploys.
+  baseURL: "",
   withCredentials: true
 });
 

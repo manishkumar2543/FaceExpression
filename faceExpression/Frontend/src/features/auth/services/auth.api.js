@@ -1,15 +1,9 @@
 import axios from 'axios';
 
-const isLocalHost =
-  typeof window !== 'undefined' &&
-  ['localhost', '127.0.0.1'].includes(window.location.hostname);
-
-const apiBaseUrl = isLocalHost
-  ? ''
-  : (import.meta.env.VITE_API_URL || window.location.origin);
-
 const api = axios.create({
-  baseURL: apiBaseUrl,
+  // The frontend is served by the same backend in production,
+  // so relative API paths avoid stale cross-origin deploy settings.
+  baseURL: '',
   withCredentials: true
 });
 
