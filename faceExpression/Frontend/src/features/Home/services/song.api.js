@@ -5,7 +5,7 @@ const isLocalHost =
   ["localhost", "127.0.0.1"].includes(window.location.hostname);
 
 const apiBaseUrl = isLocalHost
-  ? window.location.origin
+  ? ""
   : (import.meta.env.VITE_API_URL || window.location.origin);
 
 const api = axios.create({
